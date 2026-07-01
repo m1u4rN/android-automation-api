@@ -33,3 +33,20 @@ def appium_start():
 
     except Exception as e:
         return {"status": "error", "message": str(e)}
+
+
+@router.delete("/app/uninstall")
+def app_uninstall(device_id: str, app_package: str):
+    try:
+
+        result = subprocess.run(
+            ["adb", "-s", device_id, "uninstall", app_package], capture_output=True, text=True, check=True)
+
+        return {
+            "status": "success",
+            "message": f"Приложение {app_package} удалено с устройства {device_id}",
+            "text": result.stdout.strip()
+        }
+
+    except Exception as e:
+       return {"status": "error", "message": str(e)}

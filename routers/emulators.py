@@ -37,7 +37,7 @@ def get_available_emulators():
         return {"status": "error", "message": str(e)}
 
 
-@router.post("/emulator/start")
+@router.post("/start")
 def start_emulator(emulator_name: str):
     try:
 
@@ -52,15 +52,19 @@ def start_emulator(emulator_name: str):
         return {"status": "error", "message": str(e)}
 
 
-@router.delete("/emulator/stop")
-def stop_emulator(device_id: str):
+@router.delete("/stop")
+def stop_emulator(device_id: str, save_state: bool = True):
     try:
+
+        if not save_state:
+            subprocess.run(["adb", "-s", device_id, "emu", "avd", "snapshot", "delete", "default_boot"])
 
         subprocess.run(["adb", "-s", device_id, "emu", "kill"], check=True)
 
+        state_msg = "СОХРАНЕНО" if save_state else "СБРОШЕНО"
         return {
             "status": "success",
-            "message": f"Эмулятор {device_id} - выключен"
+            "message": f"Эмулятор {device_id} выключен (состояние {state_msg})"
         }
 
     except Exception as e:
