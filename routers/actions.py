@@ -16,11 +16,10 @@ def run_scripts(command: dict = Body(
             "app_package": "org.wikipedia",
             "app_activity": "org.wikipedia.main.MainActivity",
             "steps": [
-                # Внимание: если эмулятор на английском, замени 'Поиск по Википедии' на 'Search Wikipedia'
-                {"action": "click", "locator": "//android.widget.TextView[@text='Поиск по Википедии']"},
+                {"action": "click", "locator": "//android.widget.TextView[@text='Search Wikipedia']"},
                 {"action": "change_focus"},
                 {"action": "type", "locator": "//android.widget.AutoCompleteTextView", "text": "Skoda Octavia"},
-                {"action": "click", "locator": "//android.widget.TextView[@text='Škoda Octavia']"},
+                {"action": "click", "locator": "//android.widget.TextView[@text='Skoda Octavia']"},
                 {"action": "swipe", "start_x": 500, "start_y": 1800, "end_x": 500, "end_y": 400, "duration": 1000},
                 {"action": "back"},
                 {"action": "clear", "locator": "//android.widget.AutoCompleteTextView"}
