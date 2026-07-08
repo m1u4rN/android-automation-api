@@ -1,9 +1,20 @@
+import logging
 import uvicorn
 from fastapi import FastAPI
 from routers import emulators, infrastructure, actions
 
 
-app = FastAPI(title='API для автоматизации мобильного эмулятора')
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - [%(filename)s:%(lineno)d] - %(message)s",
+    handlers=[
+        logging.FileHandler("app.log", encoding="utf-8"),
+        logging.StreamHandler(),
+    ],
+)
+
+app = FastAPI(title="API для автоматизации мобильного эмулятора")
+
 app.include_router(emulators.router)
 app.include_router(infrastructure.router)
 app.include_router(actions.router)
