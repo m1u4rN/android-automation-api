@@ -1,0 +1,8 @@
+
+services:
+  api:
+    build: .
+    container_name: android_api_microservice
+    ports:
+      - "8000:8000"
+    network_mode: "host"
